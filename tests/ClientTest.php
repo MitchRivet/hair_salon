@@ -18,7 +18,7 @@
         {
             Client::deleteAll();
         }
-        
+
         function test_save()
         {
             $client_name = "Sharon";
@@ -58,6 +58,17 @@
 
             $result = Client::getAll();
             $this->assertEquals([], $result);
+        }
+
+        function test_getId()
+        {
+            $client_name = "Lauren";
+            $id = 1;
+            $test_client = new Client($client_name, $id);
+
+            $result = $test_client->getId();
+
+            $this->assertEquals(1, $result);
         }
     }
 ?>

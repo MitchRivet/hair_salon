@@ -3,10 +3,12 @@
     class Client
     {
         private $client_name;
+        private $id;
 
-        function __construct($client_name)
+        function __construct($client_name, $id = null)
         {
             $this->client_name = $client_name;
+            $this->id = $id;
         }
 
         function setClientName($new_client_name)
@@ -19,9 +21,15 @@
             return $this->client_name;
         }
 
+        function getId()
+        {
+            return $this->id;
+        }
+
         function save()
         {
             $GLOBALS['DB']->exec("INSERT INTO clients (client_name) VALUES ('{$this->getClientName()}');");
+            $this->id = $GLOBALS['DB']->lastInsertId();
         }
 
         static function getAll()
@@ -30,7 +38,8 @@
             $clients = array();
             foreach($returned_clients as $client) {
                 $client_name = $client['client_name'];
-                $new_client = new Client($client_name);
+                $id = $client['id'];
+                $new_client = new Client($client_name, $id);
                 array_push($clients, $new_client);
             }
 
@@ -39,7 +48,7 @@
 
         static function deleteAll()
         {
-            $GLOBALS['DB']->exec("DELETE FROM clients;"); 
+            $GLOBALS['DB']->exec("DELETE FROM clients;");
         }
     }
 ?>
