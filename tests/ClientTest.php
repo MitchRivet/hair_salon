@@ -70,5 +70,20 @@
 
             $this->assertEquals(1, $result);
         }
+
+        function test_Find()
+        {
+            $client_name = "Lauren";
+            $client_name2 = "Katie";
+            $test_client = new Client($client_name);
+            $test_client->save();
+            $test_client2 = new Client($client_name2);
+            $test_client2->save();
+
+            $id = $test_client->getId();
+            $result = Client::find($id);
+
+            $this->assertEquals($test_client, $result); 
+        }
     }
 ?>
